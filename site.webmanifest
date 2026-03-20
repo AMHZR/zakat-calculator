@@ -1,0 +1,16 @@
+{
+  "name": "Zakat Calculator",
+  "short_name": "Zakat",
+  "description": "A guided zakat calculator for cash, gold, silver, investments, and similar assets.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#edf7fb",
+  "theme_color": "#edf7fb",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

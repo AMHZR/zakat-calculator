@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Zakat Calculator</title>
+  <desc id="desc">A guided zakat calculator for cash, gold, silver, and assets.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#edf7fb"/>
+      <stop offset="100%" stop-color="#e4f4f0"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2477d6"/>
+      <stop offset="100%" stop-color="#0d8a74"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" rx="36" fill="url(#bg)"/>
+  <rect x="40" y="40" width="1120" height="550" rx="28" fill="rgba(255,255,255,0.85)"/>
+  <rect x="76" y="84" width="220" height="44" rx="22" fill="#dff2ea"/>
+  <text x="104" y="112" fill="#0a6758" font-family="Avenir Next, Segoe UI, sans-serif" font-size="18" font-weight="700" letter-spacing="2.5">ZAKAT CALCULATOR</text>
+
+  <text x="78" y="220" fill="#132431" font-family="Georgia, 'Times New Roman', serif" font-size="68" font-weight="700">Calculate Zakat on</text>
+  <text x="78" y="300" fill="#132431" font-family="Georgia, 'Times New Roman', serif" font-size="68" font-weight="700">Cash, Gold, Silver,</text>
+  <text x="78" y="380" fill="#132431" font-family="Georgia, 'Times New Roman', serif" font-size="68" font-weight="700">and Assets</text>
+
+  <text x="82" y="458" fill="#607687" font-family="Avenir Next, Segoe UI, sans-serif" font-size="28">
+    Guided nisab-based zakat estimates with live metal pricing.
+  </text>
+
+  <g transform="translate(772 124)">
+    <rect width="316" height="358" rx="28" fill="#ffffff" stroke="#dce8f0"/>
+    <rect x="28" y="28" width="150" height="34" rx="17" fill="url(#accent)" opacity="0.12"/>
+    <text x="48" y="51" fill="#0a6758" font-family="Avenir Next, Segoe UI, sans-serif" font-size="16" font-weight="700">STEP 1 OF 5</text>
+
+    <text x="28" y="112" fill="#132431" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-weight="700">Setup your</text>
+    <text x="28" y="152" fill="#132431" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-weight="700">zakat basis</text>
+
+    <rect x="28" y="204" width="260" height="58" rx="18" fill="#f8fcff" stroke="#dce8f0"/>
+    <text x="50" y="241" fill="#607687" font-family="Avenir Next, Segoe UI, sans-serif" font-size="24">Currency, nisab, prices</text>
+
+    <rect x="28" y="282" width="260" height="48" rx="24" fill="url(#accent)"/>
+    <text x="78" y="313" fill="#ffffff" font-family="Avenir Next, Segoe UI, sans-serif" font-size="22" font-weight="700">Start calculation</text>
+  </g>
+</svg>

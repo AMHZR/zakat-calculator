@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Zakat calculator icon">
+  <rect width="64" height="64" rx="18" fill="#fff9f0"/>
+  <path d="M38 14a18 18 0 1 0 0 36 20 20 0 1 1 0-36Z" fill="#0d6a5f"/>
+  <circle cx="44" cy="22" r="4" fill="#c8a25a"/>
+</svg>

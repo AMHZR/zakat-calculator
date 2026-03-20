@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Zakat Calculator for Cash, Gold, Silver and Assets</title>
+    <meta name="description" content="Calculate zakat on cash, bank balances, gold, silver, investments, business inventory, and similar assets with a guided nisab-based zakat calculator.">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="theme-color" content="#edf7fb">
+    <meta name="application-name" content="Zakat Calculator">
+    <meta name="apple-mobile-web-app-title" content="Zakat Calculator">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="canonical" href="https://zakat-calculator-gamma.vercel.app/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Zakat Calculator for Cash, Gold, Silver and Assets">
+    <meta property="og:description" content="A guided zakat calculator for cash, gold, silver, investments, debts, and nisab-based zakat estimates.">
+    <meta property="og:site_name" content="Zakat Calculator">
+    <meta property="og:url" content="https://zakat-calculator-gamma.vercel.app/">
+    <meta property="og:image" content="https://zakat-calculator-gamma.vercel.app/og-image.png">
+    <meta property="og:image:alt" content="Zakat Calculator social preview">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Zakat Calculator for Cash, Gold, Silver and Assets">
+    <meta name="twitter:description" content="Calculate zakat on cash, gold, silver, investments, and similar assets with a guided nisab-based calculator.">
+    <meta name="twitter:image" content="https://zakat-calculator-gamma.vercel.app/og-image.png">
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="./styles.css?v=20260320-togglecheckbox">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "Zakat Calculator",
+            "applicationCategory": "FinanceApplication",
+            "operatingSystem": "Web",
+            "isAccessibleForFree": true,
+            "description": "A guided zakat calculator for cash, bank balances, gold, silver, investments, business inventory, and similar assets.",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            }
+          },
+          {
+            "@type": "HowTo",
+            "name": "How this zakat calculator estimates zakat",
+            "description": "Choose your nisab basis and prices, add zakatable wealth, subtract short-term liabilities, and calculate zakat due.",
+            "step": [
+              {
+                "@type": "HowToStep",
+                "name": "Choose your nisab basis and market prices"
+              },
+              {
+                "@type": "HowToStep",
+                "name": "Add zakatable cash, metals, and qualifying assets"
+              },
+              {
+                "@type": "HowToStep",
+                "name": "Subtract immediate liabilities and apply 2.5% if zakat is due"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div class="landing-shell" data-landing-view>
+      <section class="landing-card">
+        <div class="landing-copy">
+          <p class="eyebrow">Zakat calculator</p>
+          <h1>Calculate zakat in a guided 5-step flow.</h1>
+          <p class="landing-text">
+            Set your nisab, review live prices, add your zakatable wealth, and end on a clear result with the basis visible.
+          </p>
+
+          <div class="landing-pill-row">
+            <span class="landing-pill">5 steps</span>
+            <span class="landing-pill">Live metal prices</span>
+            <span class="landing-pill">Clear fiqh choices</span>
+          </div>
+
+          <div class="landing-actions">
+            <button class="primary-button landing-button" type="button" data-enter-journey>Start calculation</button>
+          </div>
+        </div>
+
+        <aside class="landing-side">
+          <div class="landing-feature">
+            <strong>How the estimate works</strong>
+            <ol class="landing-flow">
+              <li>Choose your nisab basis and market prices.</li>
+              <li>Add zakatable cash, metals, and qualifying assets.</li>
+              <li>Subtract immediate due liabilities and apply 2.5% if zakat is due.</li>
+            </ol>
+            <p class="landing-note">
+              Categories covered include cash, bank balances, receivables, gold, silver, investments, and business inventory.
+            </p>
+          </div>
+
+          <details class="source-drawer landing-source-drawer">
+            <summary>Authenticity and sources</summary>
+            <p class="fine-print">
+              Built around Qur'an 9:103, Qur'an 2:267, and hadith on nisab and one quarter of one tenth.
+              Classical nisab weights are presented as the widely used 85g gold and 595g silver conversions.
+            </p>
+            <ul class="source-list">
+              <li><a href="https://quran.com/9/103" target="_blank" rel="noreferrer">Qur'an 9:103</a></li>
+              <li><a href="https://quran.com/2/267" target="_blank" rel="noreferrer">Qur'an 2:267</a></li>
+              <li><a href="https://sunnah.com/bukhari:1447" target="_blank" rel="noreferrer">Sahih al-Bukhari 1447</a></li>
+              <li><a href="https://sunnah.com/abudawud:1573" target="_blank" rel="noreferrer">Sunan Abi Dawud 1573</a></li>
+            </ul>
+          </details>
+        </aside>
+      </section>
+    </div>
+
+    <div class="app-shell" data-journey-view hidden>
+      <main class="stage-wrap">
+        <form class="journey-card" data-calculator-form>
+          <div class="journey-topbar">
+            <div class="journey-heading">
+              <p class="eyebrow">Zakat journey</p>
+              <div class="journey-summary">
+                <p class="progress-kicker" data-step-counter>Step 1 of 5</p>
+                <p class="progress-current sr-only" data-step-title>Setup your zakat basis</p>
+                <p class="progress-status" data-step-status>0 done • 4 pending</p>
+              </div>
+            </div>
+
+            <button class="ghost-button top-reset" type="button" data-reset-calculator>Reset</button>
+          </div>
+
+          <nav class="timeline" aria-label="Zakat calculator journey">
+            <button class="timeline-step" type="button" data-step-jump="0">
+              <span class="timeline-dot">1</span>
+              <span class="timeline-label">Setup</span>
+            </button>
+            <button class="timeline-step" type="button" data-step-jump="1">
+              <span class="timeline-dot">2</span>
+              <span class="timeline-label">Cash</span>
+            </button>
+            <button class="timeline-step" type="button" data-step-jump="2">
+              <span class="timeline-dot">3</span>
+              <span class="timeline-label">Metals</span>
+            </button>
+            <button class="timeline-step" type="button" data-step-jump="3">
+              <span class="timeline-dot">4</span>
+              <span class="timeline-label">Assets</span>
+            </button>
+            <button class="timeline-step" type="button" data-step-jump="4">
+              <span class="timeline-dot">5</span>
+              <span class="timeline-label">Result</span>
+            </button>
+          </nav>
+
+          <div class="step-stage">
+            <section class="step-panel is-active" data-step-panel="0">
+              <div class="step-head">
+                <p class="section-kicker">Step 1</p>
+                <h3>Setup your zakat basis</h3>
+                <p class="step-copy">
+                  Set the base once: currency, nisab method, current market prices, and whether a lunar year has completed.
+                </p>
+              </div>
+
+              <div class="field-grid">
+                <div class="field">
+                  <div class="field-header">
+                    <label class="field-label" for="currency">Currency</label>
+                    <details class="field-help">
+                      <summary aria-label="More information about Currency">?</summary>
+                      <div class="field-help-card">Use the same currency for every amount in this calculator.</div>
+                    </details>
+                  </div>
+                  <select id="currency" name="currency">
+                    <option value="AED">AED</option>
+                    <option value="USD">USD</option>
+                    <option value="SAR">SAR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="EUR">EUR</option>
+                    <option value="PKR">PKR</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <div class="field-header">
+                    <span class="field-label">Nisab basis</span>
+                    <details class="field-help">
+                      <summary aria-label="More information about Nisab basis">?</summary>
+                      <div class="field-help-card">Gold uses 20 dinars, commonly converted to 85g. Silver uses 200 dirhams, commonly converted to 595g.</div>
+                    </details>
+                  </div>
+                  <div class="choice-row">
+                    <label class="choice-chip">
+                      <input type="radio" name="nisabBasis" value="gold" checked>
+                      <span>Gold nisab</span>
+                    </label>
+                    <label class="choice-chip">
+                      <input type="radio" name="nisabBasis" value="silver">
+                      <span>Silver nisab</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <div class="field-header">
+                    <label class="field-label" for="goldPricePerGram">Gold price per gram</label>
+                    <details class="field-help">
+                      <summary aria-label="More information about Gold price per gram">?</summary>
+                      <div class="field-help-card">Use today's local market price for one gram of gold.</div>
+                    </details>
+                  </div>
+                  <input id="goldPricePerGram" type="number" name="goldPricePerGram" min="0" step="0.01" inputmode="decimal" placeholder="Enter today's market price">
+                </div>
+
+                <div class="field">
+                  <div class="field-header">
+                    <label class="field-label" for="silverPricePerGram">Silver price per gram</label>
+                    <details class="field-help">
+                      <summary aria-label="More information about Silver price per gram">?</summary>
+                      <div class="field-help-card">Use today's local market price for one gram of silver.</div>
+                    </details>
+                  </div>
+                  <input id="silverPricePerGram" type="number" name="silverPricePerGram" min="0" step="0.01" inputmode="decimal" placeholder="Enter today's market price">
+                </div>
+              </div>
+
+              <div class="price-actions">
+                <button class="primary-button" type="button" data-fetch-prices>Use latest live prices</button>
+                <p class="price-status" data-price-status>Use live prices or enter them manually.</p>
+              </div>
+
+              <p class="fine-print">
+                Live prices are converted from USD per ounce into your selected currency per gram.
+              </p>
+
+              <label class="toggle">
+                <input type="checkbox" name="hawlCompleted">
+                <span>A lunar year has passed while my net zakatable wealth stayed at or above the nisab I am using.</span>
+              </label>
+            </section>
+
+            <section class="step-panel" data-step-panel="1" hidden>
+              <div class="step-head">
+                <p class="section-kicker">Step 2</p>
+                <h3>Cash, balances, and money you can access</h3>
+                <p class="step-copy">Add the money you currently hold or can realistically collect.</p>
+              </div>
+
+              <div class="field-grid">
+                <div class="field">
+                  <div class="field-header">
+                    <label class="field-label" for="cash">Cash on hand</label>
+                    <details class="field-help">
+                      <summary aria-label="More information about Cash on hand">?</summary>
+                      <div class="field-help-card">Physical cash you currently hold.</div>
+                    </details>
+                  </div>
+                  <input id="cash" type="number" name="cash" min="0" step="0.01" inputmode="decimal" placeholder="0.00">
+                </div>
+
+                <div class="field">
+                  <div class="field-header">
+                    <label class="field-label" for="bankBalances">Bank balances</label>
+                    <details class="field-help">
+                      <summary aria-label="More information about Bank balances">?</summary>
+                      <div class="field-help-card">Money in current, savings, or similar accounts.</div>
+                    </details>
+                  </div>
+                  <input id="bankBalances" type="number" name="bankBalances" min="0" step="0.01" inputmode="decimal" placeholder="0.00">
+                </div>
+
+                <div class="field">
+                  <div class="field-header">
+                    <label class="field-label" for="unspentIncome">Unspent income still held</label>
+                    <details class="field-help">
+                      <summary aria-label="More information about Unspent income still held">?</summary>
+                      <div class="field-help-card">Income you still own. Do not include income you already spent.</div>
+                    </details>
+                  </div>
+                  <input id="unspentIncome" type="number" name="unspentIncome" min="0" step="0.01" inputmode="decimal" placeholder="Only the retained amount">
+                </div>
+
+                <div class="field">
+                  <div class="field-header">
+                    <label class="field-label" for="receivables">Recoverable money owed to you</label>
+                    <details class="field-help">
+                      <summary aria-label="More information about Recoverable money owed to you">?</summary>
+                      <div class="field-help-card">Amounts you realistically expect to recover.</div>
+                    </details>
+                  </div>
+                  <input id="receivables" type="number" name="receivables" min="0" step="0.01" inputmode="decimal" placeholder="Likely to be collected">
+                </div>
+              </div>
+            </section>
+
+            <section class="step-panel" data-step-panel="2" hidden>
+              <div class="step-head">
+                <p class="section-kicker">Step 3</p>
+                <h3>Gold, silver, and personal jewelry</h3>
+                <p class="step-copy">Keep weights in grams. The calculator values them using the prices from the setup step.</p>
+              </div>
+
+              <div class="field-grid">
+                <div class="field">
+                  <div class="field-header">
+                    <label class="field-label" for="goldGrams">Gold held as savings or investment (grams)</label>
+                    <details class="field-help">
+                      <summary aria-label="More information about Gold held as savings or investment">?</summary>
+                      <div class="field-help-card">Gold bars, coins, or stored gold kept as wealth.</div>
+                    </details>
+                  </div>
+                  <input id="goldGrams" type="number" name="goldGrams" min="0" step="0.001" inputmode="decimal" placeholder="0">
+                </div>
+
+                <div class="field">
+                  <div class="field-header">
+                    <label class="field-label" for="silverGrams">Silver held as savings or investment (grams)</label>
+                    <details class="field-help">
+                      <summary aria-label="More information about Silver held as savings or investment">?</summary>
+                      <div class="field-help-card">Silver kept as savings or bullion.</div>
+                    </details>
+                  </div>
+                  <input id="silverGrams" type="number" name="silverGrams" min="0" step="0.001" inputmode="decimal" placeholder="0">
+                </div>
+
+                <div class="field">
+                  <div class="field-header">
+                    <label class="field-label" for="personalGoldGrams">Personal-use gold jewelry (grams)</label>
+                    <details class="field-help">
+                      <summary aria-label="More information about Personal-use gold jewelry">?</summary>
+                      <div class="field-help-card">Jewelry actually kept for normal wearing or family use.</div>
+                    </details>
+                  </div>
+                  <input id="personalGoldGrams" type="number" name="personalGoldGrams" min="0" step="0.001" inputmode="decimal" placeholder="0">
+                </div>
+
+                <div class="field">
+                  <div class="field-header">
+                    <label class="field-label" for="personalSilverGrams">Personal-use silver jewelry (grams)</label>
+                    <details class="field-help">
+                      <summary aria-label="More information about Personal-use silver jewelry">?</summary>
+                      <div class="field-help-card">Silver jewelry for normal personal use.</div>
+                    </details>
+                  </div>
+                  <input id="personalSilverGrams" type="number" name="personalSilverGrams" min="0" step="0.001" inputmode="decimal" placeholder="0">
+                </div>
+              </div>
+
+              <label class="toggle">
+                <input type="checkbox" name="includePersonalJewelry">
+                <span>Include personal jewelry in the zakat base. This remains a fiqh difference, so the calculator leaves it as your choice.</span>
+              </label>
+            </section>
+
+            <section class="step-panel" data-step-panel="3" hidden>
+              <div class="step-head">
+                <p class="section-kicker">Step 4</p>
+                <h3>Investments, business inventory, and other assets</h3>
+                <p class="step-copy">Add the market-value assets you include in your zakat base.</p>
+              </div>
+
+              <div class="field-grid">
+                <div class="field">
+                  <div class="field-header">
+                    <label class="field-label" for="investments">Zakatable value of shares, funds, or crypto</label>
+                    <details class="field-help">
+                      <summary aria-label="More information about Zakatable value of shares, funds, or crypto">?</summary>
+                      <div class="field-help-card">Enter the portion you treat as zakatable today.</div>
+                    </details>
+                  </div>
+                  <input id="investments" type="number" name="investments" min="0" step="0.01" inputmode="decimal" placeholder="Current zakatable value">
+                </div>
+
+                <div class="field">
+                  <div class="field-header">
+                    <label class="field-label" for="businessInventory">Business inventory for resale</label>
+                    <details class="field-help">
+                      <summary aria-label="More information about Business inventory for resale">?</summary>
+                      <div class="field-help-card">Use current resale value for goods intended for sale.</div>
+                    </details>
+                  </div>
+                  <input id="businessInventory" type="number" name="businessInventory" min="0" step="0.01" inputmode="decimal" placeholder="Current sale value">
+                </div>
+
+                <div class="field">
+                  <div class="field-header">
+                    <label class="field-label" for="otherAssets">Other zakatable assets</label>
+                    <details class="field-help">
+                      <summary aria-label="More information about Other zakatable assets">?</summary>
+                      <div class="field-help-card">Any other liquid or near-liquid wealth you want included.</div>
+                    </details>
+                  </div>
+                  <input id="otherAssets" type="number" name="otherAssets" min="0" step="0.01" inputmode="decimal" placeholder="Anything similar you want included">
+                </div>
+              </div>
+            </section>
+
+            <section class="step-panel" data-step-panel="4" hidden>
+              <div class="step-head">
+                <p class="section-kicker">Step 5</p>
+                <h3>Subtract due debts and review your result</h3>
+                <p class="step-copy">Enter near-term deductions, then review the result and expand the details only if you need them.</p>
+              </div>
+
+              <div class="field-grid">
+                <div class="field">
+                  <div class="field-header">
+                    <label class="field-label" for="debtsDue">Personal debts due by your next zakat date</label>
+                    <details class="field-help">
+                      <summary aria-label="More information about Personal debts due by your next zakat date">?</summary>
+                      <div class="field-help-card">Only what is genuinely due soon, not your entire long loan balance.</div>
+                    </details>
+                  </div>
+                  <input id="debtsDue" type="number" name="debtsDue" min="0" step="0.01" inputmode="decimal" placeholder="Near-term liabilities only">
+                </div>
+
+                <div class="field">
+                  <div class="field-header">
+                    <label class="field-label" for="businessLiabilities">Business payables due by your next zakat date</label>
+                    <details class="field-help">
+                      <summary aria-label="More information about Business payables due by your next zakat date">?</summary>
+                      <div class="field-help-card">Short-term supplier bills, payroll, or taxes due soon.</div>
+                    </details>
+                  </div>
+                  <input id="businessLiabilities" type="number" name="businessLiabilities" min="0" step="0.01" inputmode="decimal" placeholder="0.00">
+                </div>
+              </div>
+
+              <div class="result-card">
+                <div class="status-row">
+                  <span class="status-pill" data-summary-status data-state="incomplete">We still need your metal prices</span>
+                  <p class="status-copy" data-summary-message></p>
+                </div>
+
+                <div class="result-hero">
+                  <span>Estimated zakat due today</span>
+                  <strong data-summary-zakat></strong>
+                </div>
+
+                <div class="result-grid">
+                  <div class="result-metric">
+                    <span>Net zakatable wealth</span>
+                    <strong data-summary-net-assets></strong>
+                  </div>
+                  <div class="result-metric">
+                    <span>Selected nisab threshold</span>
+                    <strong data-summary-nisab></strong>
+                  </div>
+                </div>
+              </div>
+
+              <details class="source-drawer">
+                <summary>Calculation breakdown</summary>
+                <div class="breakdown-card" data-summary-breakdown></div>
+              </details>
+
+              <details class="source-drawer">
+                <summary>Nisab values and sources</summary>
+                <div class="mini-grid">
+                  <div class="mini-card">
+                    <span>Gold nisab (85g)</span>
+                    <strong data-summary-gold-nisab></strong>
+                  </div>
+                  <div class="mini-card">
+                    <span>Silver nisab (595g)</span>
+                    <strong data-summary-silver-nisab></strong>
+                  </div>
+                </div>
+                <p class="fine-print">
+                  This app uses the widely cited conversion of 20 dinars to 85 grams of gold and 200 dirhams to
+                  595 grams of silver. That conversion is an inference from classical weights, not a Qur'an verse.
+                </p>
+                <ul class="source-list">
+                  <li><a href="https://quran.com/9/103" target="_blank" rel="noreferrer">Qur'an 9:103</a></li>
+                  <li><a href="https://quran.com/2/267" target="_blank" rel="noreferrer">Qur'an 2:267</a></li>
+                  <li><a href="https://sunnah.com/bukhari:1447" target="_blank" rel="noreferrer">Sahih al-Bukhari 1447</a></li>
+                  <li><a href="https://sunnah.com/abudawud:1573" target="_blank" rel="noreferrer">Sunan Abi Dawud 1573</a></li>
+                </ul>
+                <p class="fine-print">
+                  This is a practical calculator, not a fatwa. For complex shares, retirement accounts, or local fiqh issues, confirm the category treatment with a qualified scholar.
+                </p>
+              </details>
+
+              <p class="fine-print result-export-note">
+                Use print to save this result as a PDF with the detailed breakdown and source notes.
+              </p>
+            </section>
+          </div>
+
+          <div class="journey-actions">
+            <button class="ghost-button" type="button" data-step-back>Back</button>
+            <div class="journey-actions-right">
+              <button class="ghost-button print-button" type="button" data-print-report hidden>Print / Save PDF</button>
+              <button class="primary-button" type="button" data-step-next>Continue</button>
+            </div>
+          </div>
+        </form>
+      </main>
+    </div>
+
+    <section class="print-report" data-print-report-view aria-label="Zakat print report">
+      <header class="print-report-header">
+        <p class="print-kicker">Zakat calculation report</p>
+        <h1>Zakat result summary</h1>
+        <p class="print-meta" data-print-generated></p>
+      </header>
+
+      <section class="print-section">
+        <h2>Result</h2>
+        <div class="print-summary-grid">
+          <div class="print-summary-card">
+            <span>Status</span>
+            <strong data-print-status></strong>
+            <p data-print-message></p>
+          </div>
+          <div class="print-summary-card">
+            <span>Estimated zakat due today</span>
+            <strong data-print-zakat></strong>
+          </div>
+          <div class="print-summary-card">
+            <span>Net zakatable wealth</span>
+            <strong data-print-net-assets></strong>
+          </div>
+          <div class="print-summary-card">
+            <span>Selected nisab threshold</span>
+            <strong data-print-nisab></strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="print-section">
+        <h2>Calculation basis</h2>
+        <div class="print-detail-grid">
+          <div class="print-detail-card">
+            <span>Currency</span>
+            <strong data-print-currency></strong>
+          </div>
+          <div class="print-detail-card">
+            <span>Nisab basis</span>
+            <strong data-print-nisab-basis></strong>
+          </div>
+          <div class="print-detail-card">
+            <span>Hawl confirmed</span>
+            <strong data-print-hawl></strong>
+          </div>
+          <div class="print-detail-card">
+            <span>Personal jewelry included</span>
+            <strong data-print-jewelry-choice></strong>
+          </div>
+          <div class="print-detail-card">
+            <span>Gold price per gram</span>
+            <strong data-print-gold-price></strong>
+          </div>
+          <div class="print-detail-card">
+            <span>Silver price per gram</span>
+            <strong data-print-silver-price></strong>
+          </div>
+          <div class="print-detail-card">
+            <span>Gold nisab (85g)</span>
+            <strong data-print-gold-nisab></strong>
+          </div>
+          <div class="print-detail-card">
+            <span>Silver nisab (595g)</span>
+            <strong data-print-silver-nisab></strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="print-section">
+        <h2>Inputs used in this estimate</h2>
+        <div class="print-detail-grid" data-print-inputs></div>
+      </section>
+
+      <section class="print-section">
+        <h2>Breakdown</h2>
+        <div class="print-breakdown" data-print-breakdown></div>
+      </section>
+
+      <section class="print-section">
+        <h2>Explanation</h2>
+        <p class="print-explanation">
+          The calculator totals your zakatable assets, subtracts short-term liabilities genuinely due before your next zakat date,
+          compares the net amount against the nisab basis you selected, and applies 2.5% if nisab is met and hawl is complete.
+        </p>
+      </section>
+
+      <section class="print-section">
+        <h2>Source notes</h2>
+        <p class="print-source-note">
+          This calculator follows the common monetary zakat approach based on Qur'an 9:103, Qur'an 2:267,
+          and hadith on nisab and one quarter of one tenth. The commonly used 85g gold and 595g silver
+          nisab weights are classical conversions rather than direct Qur'anic wording.
+        </p>
+        <p class="print-source-inline">
+          Sources: Qur'an 9:103, Qur'an 2:267, Sahih al-Bukhari 1447, Sunan Abi Dawud 1573.
+        </p>
+        <p class="print-source-note">
+          This is a practical calculator, not a fatwa. For complex shares, retirement accounts, or local fiqh issues,
+          confirm the category treatment with a qualified scholar.
+        </p>
+      </section>
+    </section>
+
+    <script type="module" src="./app.js?v=20260320-togglecheckbox"></script>
+  </body>
+</html>
