@@ -37,6 +37,10 @@ body {
   font-family: "Avenir Next", "Segoe UI", sans-serif;
 }
 
+body.modal-open {
+  overflow: hidden;
+}
+
 button,
 input,
 select {
@@ -176,6 +180,10 @@ a {
   z-index: 1;
 }
 
+.secondary-landing-button {
+  box-shadow: none;
+}
+
 .landing-side {
   display: grid;
   align-content: start;
@@ -237,6 +245,116 @@ a {
   padding-left: 18px;
 }
 
+.learn-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+.learn-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 25, 34, 0.46);
+  backdrop-filter: blur(8px);
+}
+
+.learn-panel {
+  position: relative;
+  z-index: 1;
+  width: min(920px, 100%);
+  max-height: min(88dvh, 860px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 14px;
+  padding: 18px;
+  border-radius: 24px;
+  border: 1px solid rgba(19, 36, 49, 0.1);
+  background:
+    radial-gradient(circle at top right, rgba(36, 119, 214, 0.12), transparent 32%),
+    linear-gradient(150deg, rgba(255, 255, 255, 0.98), rgba(239, 250, 246, 0.96));
+  box-shadow: 0 28px 90px rgba(8, 25, 34, 0.24);
+  outline: none;
+}
+
+.learn-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 14px;
+}
+
+.learn-panel-head h2,
+.learn-card h3 {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+}
+
+.learn-panel-head h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.learn-close {
+  white-space: nowrap;
+}
+
+.learn-panel-body {
+  min-height: 0;
+  overflow: auto;
+  display: grid;
+  gap: 14px;
+  padding-right: 4px;
+}
+
+.learn-hero,
+.learn-card {
+  border-radius: 20px;
+  border: 1px solid rgba(19, 36, 49, 0.08);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.learn-hero {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+}
+
+.learn-hero strong {
+  font-size: 1.06rem;
+}
+
+.learn-hero p,
+.learn-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.learn-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.learn-card {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+}
+
+.learn-list {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.learn-source-list {
+  margin-top: 0;
+}
+
 .app-shell {
   display: grid;
   grid-template-rows: minmax(0, 1fr);
@@ -247,6 +365,13 @@ a {
   justify-content: space-between;
   gap: 10px;
   align-items: center;
+}
+
+.journey-top-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .journey-heading {
@@ -640,10 +765,42 @@ input:not([type="checkbox"]):not([type="radio"]):focus::placeholder {
 }
 
 .journey-actions {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   padding-top: 4px;
   border-top: 1px solid rgba(19, 36, 49, 0.08);
+}
+
+.journey-footer-link {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.92rem;
+  transition: color 140ms ease, transform 140ms ease;
+}
+
+.journey-footer-link svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  flex: 0 0 auto;
+}
+
+.journey-footer-link:hover,
+.journey-footer-link:focus-visible {
+  color: var(--ink);
+  transform: translateY(-1px);
+  outline: none;
 }
 
 .journey-actions-right {
@@ -895,6 +1052,7 @@ input:not([type="checkbox"]):not([type="radio"]):focus::placeholder {
     overflow-x: auto;
     padding-bottom: 2px;
   }
+
 }
 
 @media (max-width: 640px) {
@@ -927,7 +1085,12 @@ input:not([type="checkbox"]):not([type="radio"]):focus::placeholder {
     align-items: stretch;
   }
 
+  .journey-actions {
+    display: flex;
+  }
+
   .landing-actions .primary-button,
+  .landing-actions .ghost-button,
   .price-actions .primary-button,
   .journey-actions .primary-button,
   .journey-actions .ghost-button,
@@ -968,6 +1131,28 @@ input:not([type="checkbox"]):not([type="radio"]):focus::placeholder {
     display: grid;
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     gap: 10px;
+  }
+
+  .journey-footer-link {
+    grid-column: 1 / -1;
+    justify-content: center;
+    min-height: 22px;
+    order: 3;
+  }
+
+  .learn-panel {
+    max-height: min(92dvh, 860px);
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .learn-panel-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .learn-grid {
+    grid-template-columns: 1fr;
   }
 
   .result-grid,

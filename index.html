@@ -32,7 +32,7 @@
       string on CSS/JS references below is bumped manually on each deploy to bust
       the browser cache when file contents change.
     -->
-    <link rel="stylesheet" href="./styles.css?v=20260321-currency-symbols">
+    <link rel="stylesheet" href="./styles.css?v=20260322-learn-zakat">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -91,6 +91,9 @@
 
           <div class="landing-actions">
             <button class="primary-button landing-button" type="button" data-enter-journey>Start calculation</button>
+            <button class="ghost-button landing-button secondary-landing-button" type="button" data-open-learn>
+              Learn about zakat
+            </button>
           </div>
         </div>
 
@@ -137,7 +140,9 @@
               </div>
             </div>
 
-            <button class="ghost-button top-reset" type="button" data-reset-calculator>Reset</button>
+            <div class="journey-top-actions">
+              <button class="ghost-button top-reset" type="button" data-reset-calculator>Reset</button>
+            </div>
           </div>
 
           <nav class="timeline" aria-label="Zakat calculator journey">
@@ -511,6 +516,12 @@
 
           <div class="journey-actions">
             <button class="ghost-button" type="button" data-step-back>Back</button>
+            <button class="journey-footer-link" type="button" data-open-learn>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 2.25a1.4 1.4 0 0 1 1.4 1.4v.64a7.75 7.75 0 1 1-3.3.12V3.65A1.4 1.4 0 0 1 12 2.25Zm0 5.05a1.28 1.28 0 0 0-1.28 1.28v3.02a1.28 1.28 0 1 0 2.56 0V8.58A1.28 1.28 0 0 0 12 7.3Zm0 8.49a1.35 1.35 0 1 0 0 2.69 1.35 1.35 0 0 0 0-2.69Z"></path>
+              </svg>
+              <span>Learn about zakat</span>
+            </button>
             <div class="journey-actions-right">
               <button class="ghost-button print-button" type="button" data-print-report hidden>Print / Save PDF</button>
               <button class="primary-button" type="button" data-step-next>Continue</button>
@@ -519,6 +530,92 @@
         </form>
       </main>
     </div>
+
+    <section class="learn-modal" data-learn-modal hidden aria-hidden="true">
+      <div class="learn-modal-backdrop" data-close-learn></div>
+      <div class="learn-panel" role="dialog" aria-modal="true" aria-labelledby="learn-zakat-title" tabindex="-1">
+        <div class="learn-panel-head">
+          <div>
+            <p class="section-kicker">Learn</p>
+            <h2 id="learn-zakat-title">Learn about zakat</h2>
+          </div>
+          <button class="ghost-button learn-close" type="button" data-close-learn>Close</button>
+        </div>
+
+        <div class="learn-panel-body">
+          <section class="learn-hero">
+            <strong>Zakat is an act of worship on qualifying wealth.</strong>
+            <p>
+              It is one of the five pillars of Islam. Broadly, it applies when a Muslim owns qualifying wealth above the nisab
+              threshold for one lunar year, then gives a fixed share to eligible recipients for the sake of Allah.
+            </p>
+          </section>
+
+          <div class="learn-grid">
+            <article class="learn-card">
+              <h3>What zakat means</h3>
+              <p>
+                Zakat is not a general donation. It is an obligation on specific forms of wealth, calculated with clear rules around
+                nisab, hawl, and the types of assets that are included.
+              </p>
+            </article>
+
+            <article class="learn-card">
+              <h3>Why Muslims pay it</h3>
+              <p>
+                Muslims pay zakat in obedience to Allah, to purify wealth, and to fulfill the rights of people in need. It is both
+                a spiritual duty and a social responsibility.
+              </p>
+            </article>
+
+            <article class="learn-card">
+              <h3>Who usually pays</h3>
+              <p>
+                In practical terms, zakat becomes due when qualifying net wealth stays at or above the nisab for a lunar year.
+                This calculator focuses on the common monetary zakat case for personal wealth.
+              </p>
+            </article>
+
+            <article class="learn-card">
+              <h3>What this app helps with</h3>
+              <p>
+                This calculator estimates zakat on cash, bank balances, receivables, gold, silver, investments, business inventory,
+                and short-term liabilities. It is built for clarity, not for complex fatwa decisions.
+              </p>
+            </article>
+          </div>
+
+          <section class="learn-card learn-card-wide">
+            <h3>Benefits and wisdom</h3>
+            <ul class="learn-list">
+              <li>It helps purify wealth and reminds the believer that provision comes from Allah.</li>
+              <li>It supports people who have a right over wealth and keeps social care active in the community.</li>
+              <li>It builds discipline, gratitude, and a more honest relationship with money.</li>
+              <li>It gives the believer a chance to seek reward from Allah through a pillar of Islam.</li>
+            </ul>
+          </section>
+
+          <section class="learn-card learn-card-wide">
+            <h3>Important reminder</h3>
+            <p>
+              This app is a practical calculator, not a fatwa. For business complexity, retirement accounts, local fiqh differences,
+              or edge cases, confirm the treatment with a qualified scholar.
+            </p>
+          </section>
+
+          <section class="learn-card learn-card-wide">
+            <h3>Primary sources</h3>
+            <ul class="source-list learn-source-list">
+              <li><a href="https://quran.com/9/103" target="_blank" rel="noreferrer">Qur'an 9:103</a></li>
+              <li><a href="https://quran.com/2/267" target="_blank" rel="noreferrer">Qur'an 2:267</a></li>
+              <li><a href="https://quran.com/9/60" target="_blank" rel="noreferrer">Qur'an 9:60</a></li>
+              <li><a href="https://sunnah.com/bukhari:1447" target="_blank" rel="noreferrer">Sahih al-Bukhari 1447</a></li>
+              <li><a href="https://sunnah.com/abudawud:1573" target="_blank" rel="noreferrer">Sunan Abi Dawud 1573</a></li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </section>
 
     <section class="print-report" data-print-report-view aria-label="Zakat print report">
       <header class="print-report-header">
@@ -624,6 +721,6 @@
     </section>
 
     <!-- Cache-busting: bump ?v= on deploy; see comment near <link rel="stylesheet"> for full strategy -->
-    <script type="module" src="./app.js?v=20260321-currency-symbols"></script>
+    <script type="module" src="./app.js?v=20260322-learn-zakat"></script>
   </body>
 </html>

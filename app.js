@@ -69,6 +69,10 @@ const form = document.querySelector("[data-calculator-form]");
 const landingView = document.querySelector("[data-landing-view]");
 const journeyView = document.querySelector("[data-journey-view]");
 const enterJourneyButton = document.querySelector("[data-enter-journey]");
+const learnOpenButtons = Array.from(document.querySelectorAll("[data-open-learn]"));
+const learnCloseButtons = Array.from(document.querySelectorAll("[data-close-learn]"));
+const learnModal = document.querySelector("[data-learn-modal]");
+const learnPanel = learnModal?.querySelector(".learn-panel");
 const resetButton = document.querySelector("[data-reset-calculator]");
 const fetchPricesButton = document.querySelector("[data-fetch-prices]");
 const priceStatus = document.querySelector("[data-price-status]");
@@ -141,6 +145,7 @@ const printFields = {
 
 let currentStep = 0;
 let latestRender = null;
+let lastLearnTrigger = null;
 
 function setText(elements, value) {
   elements.forEach((element) => {
@@ -151,6 +156,31 @@ function setText(elements, value) {
 function setJourneyVisibility(started) {
   landingView.hidden = started;
   journeyView.hidden = !started;
+}
+
+function openLearnModal(trigger) {
+  if (!learnModal) {
+    return;
+  }
+
+  lastLearnTrigger = trigger || document.activeElement;
+  learnModal.hidden = false;
+  learnModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+  learnPanel?.focus({ preventScroll: true });
+}
+
+function closeLearnModal() {
+  if (!learnModal) {
+    return;
+  }
+
+  learnModal.hidden = true;
+  learnModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+  if (lastLearnTrigger instanceof HTMLElement) {
+    lastLearnTrigger.focus({ preventScroll: true });
+  }
 }
 
 function setStatusPills(label, state) {
@@ -586,6 +616,18 @@ enterJourneyButton.addEventListener("click", () => {
   startJourney();
 });
 
+learnOpenButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    openLearnModal(button);
+  });
+});
+
+learnCloseButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    closeLearnModal();
+  });
+});
+
 backButton.addEventListener("click", () => {
   setCurrentStep(currentStep - 1);
 });
@@ -617,6 +659,12 @@ printButton.addEventListener("click", () => {
   }
 
   window.print();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && learnModal && !learnModal.hidden) {
+    closeLearnModal();
+  }
 });
 
 if (!initialState.goldPricePerGram && !initialState.silverPricePerGram) {
