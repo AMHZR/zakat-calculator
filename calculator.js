@@ -1,3 +1,5 @@
+import { roundCurrency } from "./utils.js";
+
 const GOLD_NISAB_GRAMS = 85;
 const SILVER_NISAB_GRAMS = 595;
 const ZAKAT_RATE = 0.025;
@@ -7,10 +9,29 @@ function toNumber(value) {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
 }
 
-function roundCurrency(value) {
-  return Math.round((value + Number.EPSILON) * 100) / 100;
-}
-
+/**
+ * Calculate zakat obligation based on the provided financial inputs.
+ * @param {object} input - The financial input values for zakat calculation.
+ * @param {number} [input.cash] - Cash on hand.
+ * @param {number} [input.bankBalances] - Bank account balances.
+ * @param {number} [input.unspentIncome] - Unspent income.
+ * @param {number} [input.receivables] - Money owed to the user.
+ * @param {number} [input.investments] - Investment value.
+ * @param {number} [input.businessInventory] - Business inventory value.
+ * @param {number} [input.otherAssets] - Other zakatable assets.
+ * @param {number} [input.debtsDue] - Short-term debts owed by the user.
+ * @param {number} [input.businessLiabilities] - Business liabilities.
+ * @param {number} [input.goldPricePerGram] - Current gold price per gram.
+ * @param {number} [input.silverPricePerGram] - Current silver price per gram.
+ * @param {number} [input.goldGrams] - Grams of gold held (non-personal).
+ * @param {number} [input.silverGrams] - Grams of silver held (non-personal).
+ * @param {number} [input.personalGoldGrams] - Grams of personal gold jewelry.
+ * @param {number} [input.personalSilverGrams] - Grams of personal silver jewelry.
+ * @param {boolean} [input.includePersonalJewelry] - Whether to include personal jewelry in calculation.
+ * @param {boolean} [input.hawlCompleted] - Whether a full lunar year has passed above nisab.
+ * @param {string} [input.nisabBasis] - Nisab basis: "gold" or "silver".
+ * @returns {{ constants: { goldNisabGrams: number, silverNisabGrams: number, zakatRate: number }, values: { goldValue: number, silverValue: number, personalGoldValue: number, personalSilverValue: number, includedJewelryValue: number, grossAssets: number, deductions: number, netZakatableAssets: number, goldNisabValue: number|null, silverNisabValue: number|null, selectedNisabValue: number|null, zakatDue: number }, status: string, statusMessage: string }}
+ */
 export function calculateZakat(input) {
   const cash = toNumber(input.cash);
   const bankBalances = toNumber(input.bankBalances);

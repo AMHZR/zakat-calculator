@@ -107,7 +107,6 @@ const printFields = {
 };
 
 let currentStep = 0;
-let journeyStarted = false;
 let latestRender = null;
 
 function setText(elements, value) {
@@ -117,7 +116,6 @@ function setText(elements, value) {
 }
 
 function setJourneyVisibility(started) {
-  journeyStarted = started;
   landingView.hidden = started;
   journeyView.hidden = !started;
 }
@@ -236,24 +234,28 @@ function renderBreakdown(result, currency) {
     ["Immediate deductions", result.values.deductions]
   ];
 
-  const markup = items
-    .map(
-      ([label, value]) =>
-        `<div class="breakdown-row"><span>${label}</span><strong>${formatMoney(value, currency)}</strong></div>`
-    )
-    .join("");
-
   summaryFields.breakdown.forEach((element) => {
-    element.innerHTML = markup;
+    element.replaceChildren();
+
+    for (const [label, value] of items) {
+      const row = document.createElement("div");
+      row.className = "breakdown-row";
+
+      const span = document.createElement("span");
+      span.textContent = label;
+
+      const strong = document.createElement("strong");
+      strong.textContent = formatMoney(value, currency);
+
+      row.appendChild(span);
+      row.appendChild(strong);
+      element.appendChild(row);
+    }
   });
 }
 
 function formatBoolean(value) {
   return value ? "Yes" : "No";
-}
-
-function formatFieldMoney(value, currency) {
-  return value === "" ? "Not entered" : formatMoney(Number(value || 0), currency);
 }
 
 function renderPrintReport(state, result, statusLabel, currency) {
@@ -274,30 +276,7 @@ function renderPrintReport(state, result, statusLabel, currency) {
     ["Business payables due", state.businessLiabilities, "money"]
   ];
 
-  const inputsMarkup = inputItems
-    .filter(([, value]) => value !== "")
-    .map(([label, value, kind]) => {
-      const displayValue = kind === "grams"
-        ? `${value} g`
-        : formatMoney(Number(value || 0), currency);
-      return `<div class="print-detail-card"><span>${label}</span><strong>${displayValue}</strong></div>`;
-    })
-    .join("");
-
-  const breakdownMarkup = [
-    ["Gross zakatable assets", result.values.grossAssets],
-    ["Included gold", result.values.goldValue],
-    ["Included silver", result.values.silverValue],
-    ["Included personal jewelry", result.values.includedJewelryValue],
-    ["Immediate deductions", result.values.deductions],
-    ["Net zakatable wealth", result.values.netZakatableAssets],
-    ["Zakat due", result.values.zakatDue]
-  ]
-    .map(
-      ([label, value]) =>
-        `<div class="breakdown-row"><span>${label}</span><strong>${formatMoney(value, currency)}</strong></div>`
-    )
-    .join("");
+  const filteredInputs = inputItems.filter(([, value]) => value !== "");
 
   printFields.generated.textContent = `Generated ${new Intl.DateTimeFormat(undefined, {
     dateStyle: "medium",
@@ -326,8 +305,56 @@ function renderPrintReport(state, result, statusLabel, currency) {
   printFields.silverNisab.textContent = result.values.silverNisabValue === null
     ? "Enter silver price"
     : formatMoney(result.values.silverNisabValue, currency);
-  printFields.inputs.innerHTML = inputsMarkup || '<div class="print-detail-card"><span>Entered asset and debt amounts</span><strong>No optional amounts were entered</strong></div>';
-  printFields.breakdown.innerHTML = breakdownMarkup;
+  printFields.inputs.replaceChildren();
+  if (filteredInputs.length > 0) {
+    for (const [label, value, kind] of filteredInputs) {
+      const displayValue = kind === "grams"
+        ? `${value} g`
+        : formatMoney(Number(value || 0), currency);
+      const card = document.createElement("div");
+      card.className = "print-detail-card";
+      const span = document.createElement("span");
+      span.textContent = label;
+      const strong = document.createElement("strong");
+      strong.textContent = displayValue;
+      card.appendChild(span);
+      card.appendChild(strong);
+      printFields.inputs.appendChild(card);
+    }
+  } else {
+    const card = document.createElement("div");
+    card.className = "print-detail-card";
+    const span = document.createElement("span");
+    span.textContent = "Entered asset and debt amounts";
+    const strong = document.createElement("strong");
+    strong.textContent = "No optional amounts were entered";
+    card.appendChild(span);
+    card.appendChild(strong);
+    printFields.inputs.appendChild(card);
+  }
+
+  const breakdownItems = [
+    ["Gross zakatable assets", result.values.grossAssets],
+    ["Included gold", result.values.goldValue],
+    ["Included silver", result.values.silverValue],
+    ["Included personal jewelry", result.values.includedJewelryValue],
+    ["Immediate deductions", result.values.deductions],
+    ["Net zakatable wealth", result.values.netZakatableAssets],
+    ["Zakat due", result.values.zakatDue]
+  ];
+
+  printFields.breakdown.replaceChildren();
+  for (const [label, value] of breakdownItems) {
+    const row = document.createElement("div");
+    row.className = "breakdown-row";
+    const span = document.createElement("span");
+    span.textContent = label;
+    const strong = document.createElement("strong");
+    strong.textContent = formatMoney(value, currency);
+    row.appendChild(span);
+    row.appendChild(strong);
+    printFields.breakdown.appendChild(row);
+  }
 }
 
 function render(state) {

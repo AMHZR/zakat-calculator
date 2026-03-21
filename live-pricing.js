@@ -1,8 +1,6 @@
-const TROY_OUNCE_IN_GRAMS = 31.1034768;
+import { roundCurrency, fetchJson } from "./utils.js";
 
-function roundCurrency(value) {
-  return Math.round((value + Number.EPSILON) * 100) / 100;
-}
+const TROY_OUNCE_IN_GRAMS = 31.1034768;
 
 function ensureFiniteNumber(value, label) {
   if (!Number.isFinite(value)) {
@@ -10,16 +8,6 @@ function ensureFiniteNumber(value, label) {
   }
 
   return value;
-}
-
-async function fetchJson(url) {
-  const response = await fetch(url);
-
-  if (!response.ok) {
-    throw new Error(`Request failed with status ${response.status}.`);
-  }
-
-  return response.json();
 }
 
 async function fetchUsdRate(targetCurrency) {
@@ -50,6 +38,12 @@ async function fetchUsdRate(targetCurrency) {
   };
 }
 
+/**
+ * Convert a USD-per-troy-ounce price to a target-currency-per-gram price.
+ * @param {number} pricePerOunceUsd - Metal price in USD per troy ounce.
+ * @param {number} [usdToCurrencyRate=1] - Exchange rate from USD to target currency.
+ * @returns {number} Price per gram in the target currency, rounded to two decimals.
+ */
 export function convertUsdOunceToCurrencyGram(pricePerOunceUsd, usdToCurrencyRate = 1) {
   const ouncePrice = ensureFiniteNumber(Number(pricePerOunceUsd), "USD ounce price");
   const exchangeRate = ensureFiniteNumber(Number(usdToCurrencyRate), "exchange rate");
@@ -57,6 +51,11 @@ export function convertUsdOunceToCurrencyGram(pricePerOunceUsd, usdToCurrencyRat
   return roundCurrency((ouncePrice * exchangeRate) / TROY_OUNCE_IN_GRAMS);
 }
 
+/**
+ * Fetch latest gold and silver prices from external providers and convert to the target currency per gram.
+ * @param {string} [currency] - ISO 4217 currency code (defaults to "USD").
+ * @returns {Promise<{currency: string, goldPricePerGram: number, silverPricePerGram: number, sources: {metals: string, fx: string}, updatedAt: {gold: string|null, silver: string|null, fx: string|null}}>}
+ */
 export async function fetchLatestMetalPricesFromProviders(currency) {
   const targetCurrency = currency || "USD";
   const [gold, silver, fx] = await Promise.all([

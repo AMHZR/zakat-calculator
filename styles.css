@@ -170,18 +170,6 @@ a {
   font-weight: 700;
 }
 
-.landing-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 9px 13px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.84);
-  border: 1px solid rgba(19, 36, 49, 0.08);
-  color: var(--muted);
-  font-size: 0.92rem;
-  font-weight: 700;
-}
-
 .landing-button {
   min-width: 190px;
   position: relative;
@@ -818,10 +806,6 @@ input:not([type="checkbox"]):not([type="radio"]):focus::placeholder {
   }
 
   .field-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .field-grid-tight {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 

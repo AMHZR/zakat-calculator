@@ -21,9 +21,23 @@ const mimeTypes = {
   ".ico": "image/x-icon"
 };
 
-function resolvePath(urlPath) {
-  const safePath = normalize(urlPath === "/" ? "/index.html" : urlPath).replace(/^(\.\.[/\\])+/, "");
-  return join(__dirname, safePath);
+/**
+ * Resolve a URL path to an absolute file path within the project root.
+ * Returns null if the resolved path escapes __dirname (path traversal).
+ * @param {string} urlPath
+ * @returns {string | null}
+ */
+export function resolvePath(urlPath) {
+  const requestedPath = urlPath === "/" ? "/index.html" : urlPath;
+  const decodedPath = decodeURIComponent(requestedPath);
+  const segments = decodedPath.split(/[\\/]+/).filter(Boolean);
+
+  if (segments.includes("..")) {
+    return null;
+  }
+
+  const normalized = normalize(decodedPath).replace(/^\/+/, "");
+  return join(__dirname, normalized);
 }
 
 createServer(async (request, response) => {
@@ -49,6 +63,11 @@ createServer(async (request, response) => {
     }
 
     const filePath = resolvePath(url.pathname);
+    if (filePath === null) {
+      response.writeHead(403, { "Content-Type": "text/plain; charset=utf-8" });
+      response.end("Forbidden");
+      return;
+    }
     const body = await readFile(filePath);
     const contentType = mimeTypes[extname(filePath)] || "application/octet-stream";
 

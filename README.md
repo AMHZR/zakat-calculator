@@ -4,7 +4,7 @@ A clean, guided, mobile-friendly zakat calculator for cash, gold, silver, invest
 
 This project is built to make zakat calculation easier for everyday users without turning the experience into a long, confusing finance form. Instead of asking for everything on one crowded screen, it walks the user through a simple 5-step journey, shows a clear result, and keeps the calculation basis visible throughout.
 
-Live app: [zakat-calculator-gamma.vercel.app](https://zakat-calculator-gamma.vercel.app/)
+Live app: [zakat-calculator-universal.vercel.app](https://zakat-calculator-universal.vercel.app/)
 
 ## Why this project exists
 

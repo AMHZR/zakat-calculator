@@ -5,6 +5,9 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "test": "node --test"
+    "test": "node --experimental-test-module-mocks --test"
+  },
+  "devDependencies": {
+    "fast-check": "^4.6.0"
   }
 }

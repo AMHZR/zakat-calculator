@@ -10,21 +10,29 @@
     <meta name="application-name" content="Zakat Calculator">
     <meta name="apple-mobile-web-app-title" content="Zakat Calculator">
     <meta name="format-detection" content="telephone=no">
-    <link rel="canonical" href="https://zakat-calculator-gamma.vercel.app/">
+    <link rel="canonical" href="https://zakat-calculator-universal.vercel.app/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Zakat Calculator for Cash, Gold, Silver and Assets">
     <meta property="og:description" content="A guided zakat calculator for cash, gold, silver, investments, debts, and nisab-based zakat estimates.">
     <meta property="og:site_name" content="Zakat Calculator">
-    <meta property="og:url" content="https://zakat-calculator-gamma.vercel.app/">
-    <meta property="og:image" content="https://zakat-calculator-gamma.vercel.app/og-image.png">
+    <meta property="og:url" content="https://zakat-calculator-universal.vercel.app/">
+    <meta property="og:image" content="https://zakat-calculator-universal.vercel.app/og-image.png">
     <meta property="og:image:alt" content="Zakat Calculator social preview">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Zakat Calculator for Cash, Gold, Silver and Assets">
     <meta name="twitter:description" content="Calculate zakat on cash, gold, silver, investments, and similar assets with a guided nisab-based calculator.">
-    <meta name="twitter:image" content="https://zakat-calculator-gamma.vercel.app/og-image.png">
+    <meta name="twitter:image" content="https://zakat-calculator-universal.vercel.app/og-image.png">
     <link rel="icon" href="./favicon.svg" type="image/svg+xml">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="stylesheet" href="./styles.css?v=20260320-togglecheckbox">
+    <!--
+      Cache-busting strategy (no build step):
+      Vercel serves index.html with a short cache (s-maxage) and automatic ETag,
+      so browsers always revalidate the HTML quickly. Static assets (CSS, JS, images)
+      are served with long immutable Cache-Control via vercel.json. The ?v= query
+      string on CSS/JS references below is bumped manually on each deploy to bust
+      the browser cache when file contents change.
+    -->
+    <link rel="stylesheet" href="./styles.css?v=20260321-releasecheck">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -604,6 +612,7 @@
       </section>
     </section>
 
-    <script type="module" src="./app.js?v=20260320-togglecheckbox"></script>
+    <!-- Cache-busting: bump ?v= on deploy; see comment near <link rel="stylesheet"> for full strategy -->
+    <script type="module" src="./app.js?v=20260321-releasecheck"></script>
   </body>
 </html>
