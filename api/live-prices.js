@@ -3,7 +3,7 @@ import { fetchLatestMetalPricesFromProviders } from "../live-pricing.js";
 const ALLOWED_CURRENCIES = new Set(["AED", "USD", "SAR", "GBP", "EUR", "INR", "PKR"]);
 
 export async function GET(request) {
-  const { searchParams } = new URL(request.url, "https://zakat-calculator-universal.vercel.app");
+  const { searchParams } = new URL(request.url, "https://zakat.waahid.com");
   const currency = searchParams.get("currency") || "USD";
 
   if (!ALLOWED_CURRENCIES.has(currency)) {
