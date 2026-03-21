@@ -3,7 +3,7 @@ import { fetchLatestMetalPrices } from "./pricing.js";
 
 const STORAGE_KEY = "zakat-calculator-state";
 const CURRENCY_SYMBOLS = {
-  AED: "AED",
+  AED: "د.إ",
   USD: "$",
   SAR: "SAR",
   GBP: "£",
