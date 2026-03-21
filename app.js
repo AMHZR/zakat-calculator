@@ -2,6 +2,15 @@ import { calculateZakat } from "./calculator.js";
 import { fetchLatestMetalPrices } from "./pricing.js";
 
 const STORAGE_KEY = "zakat-calculator-state";
+const CURRENCY_SYMBOLS = {
+  AED: "AED",
+  USD: "$",
+  SAR: "SAR",
+  GBP: "£",
+  EUR: "€",
+  INR: "₹",
+  PKR: "Rs"
+};
 
 const defaultState = {
   currency: "AED",
@@ -40,6 +49,7 @@ const enterJourneyButton = document.querySelector("[data-enter-journey]");
 const resetButton = document.querySelector("[data-reset-calculator]");
 const fetchPricesButton = document.querySelector("[data-fetch-prices]");
 const priceStatus = document.querySelector("[data-price-status]");
+const currencyPrefixes = Array.from(document.querySelectorAll("[data-currency-prefix]"));
 const stepPanels = Array.from(document.querySelectorAll("[data-step-panel]"));
 const stepButtons = Array.from(document.querySelectorAll("[data-step-jump]"));
 const backButton = document.querySelector("[data-step-back]");
@@ -124,6 +134,17 @@ function setStatusPills(label, state) {
   summaryFields.status.forEach((element) => {
     element.textContent = label;
     element.dataset.state = state;
+  });
+}
+
+function getCurrencyPrefix(currency) {
+  return CURRENCY_SYMBOLS[currency] || currency || defaultState.currency;
+}
+
+function updateCurrencyPrefixes(currency) {
+  const prefix = getCurrencyPrefix(currency);
+  currencyPrefixes.forEach((element) => {
+    element.textContent = prefix;
   });
 }
 
@@ -458,6 +479,7 @@ function setPriceStatus(message, tone = "neutral") {
 function applyState(state) {
   populateForm(state);
   saveState(state);
+  updateCurrencyPrefixes(state.currency);
   render(state);
 }
 
@@ -469,10 +491,11 @@ function startJourney({ step = 0, focus = true } = {}) {
 function handleChange(event) {
   const state = collectState();
   saveState(state);
+  updateCurrencyPrefixes(state.currency);
   render(state);
 
   if (event?.target?.name === "currency") {
-    setPriceStatus("Currency changed. Fetch live prices again if you want fresh prices in the new currency.", "neutral");
+    refreshLivePrices();
   }
 }
 
@@ -510,6 +533,7 @@ async function refreshLivePrices() {
 
 const initialState = loadState();
 populateForm(initialState);
+updateCurrencyPrefixes(initialState.currency);
 render(initialState);
 setJourneyVisibility(false);
 renderStep();

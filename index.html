@@ -32,7 +32,7 @@
       string on CSS/JS references below is bumped manually on each deploy to bust
       the browser cache when file contents change.
     -->
-    <link rel="stylesheet" href="./styles.css?v=20260321-releasecheck">
+    <link rel="stylesheet" href="./styles.css?v=20260321-currencyprefix">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -221,7 +221,10 @@
                       <div class="field-help-card">Use today's local market price for one gram of gold.</div>
                     </details>
                   </div>
-                  <input id="goldPricePerGram" type="number" name="goldPricePerGram" min="0" step="0.01" inputmode="decimal" placeholder="Enter today's market price">
+                  <div class="price-input-shell">
+                    <span class="currency-prefix" data-currency-prefix> AED </span>
+                    <input id="goldPricePerGram" type="number" name="goldPricePerGram" min="0" step="0.01" inputmode="decimal" placeholder="Enter today's market price">
+                  </div>
                 </div>
 
                 <div class="field">
@@ -232,7 +235,10 @@
                       <div class="field-help-card">Use today's local market price for one gram of silver.</div>
                     </details>
                   </div>
-                  <input id="silverPricePerGram" type="number" name="silverPricePerGram" min="0" step="0.01" inputmode="decimal" placeholder="Enter today's market price">
+                  <div class="price-input-shell">
+                    <span class="currency-prefix" data-currency-prefix> AED </span>
+                    <input id="silverPricePerGram" type="number" name="silverPricePerGram" min="0" step="0.01" inputmode="decimal" placeholder="Enter today's market price">
+                  </div>
                 </div>
               </div>
 
@@ -614,6 +620,6 @@
     </section>
 
     <!-- Cache-busting: bump ?v= on deploy; see comment near <link rel="stylesheet"> for full strategy -->
-    <script type="module" src="./app.js?v=20260321-releasecheck"></script>
+    <script type="module" src="./app.js?v=20260321-currencyprefix"></script>
   </body>
 </html>

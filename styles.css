@@ -447,6 +447,42 @@ input:not([type="checkbox"]):not([type="radio"]):focus::placeholder {
   color: transparent;
 }
 
+.price-input-shell {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  border: 1px solid rgba(19, 36, 49, 0.12);
+  border-radius: var(--radius-md);
+  background: var(--surface-soft);
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.currency-prefix {
+  flex: 0 0 auto;
+  padding: 0 0 0 14px;
+  color: var(--muted);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.price-input-shell input:not([type="checkbox"]):not([type="radio"]) {
+  min-height: auto;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding-left: 10px;
+}
+
+.price-input-shell:focus-within {
+  border-color: rgba(36, 119, 214, 0.44);
+  box-shadow: 0 0 0 4px rgba(36, 119, 214, 0.12);
+}
+
+.price-input-shell input:not([type="checkbox"]):not([type="radio"]):focus {
+  border-color: transparent;
+  box-shadow: none;
+}
+
 .choice-chip {
   position: relative;
   cursor: pointer;
