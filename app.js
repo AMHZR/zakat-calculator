@@ -3,13 +3,36 @@ import { fetchLatestMetalPrices } from "./pricing.js";
 
 const STORAGE_KEY = "zakat-calculator-state";
 const CURRENCY_SYMBOLS = {
-  AED: "د.إ",
-  USD: "$",
-  SAR: "SAR",
-  GBP: "£",
-  EUR: "€",
-  INR: "₹",
-  PKR: "Rs"
+  AED: {
+    type: "image",
+    alt: "UAE dirham symbol",
+    src: "./assets/currency/aed-dirham-symbol.png"
+  },
+  USD: {
+    type: "text",
+    value: "$"
+  },
+  SAR: {
+    type: "image",
+    alt: "Saudi riyal symbol",
+    src: "./assets/currency/sar-riyal-symbol.svg"
+  },
+  GBP: {
+    type: "text",
+    value: "£"
+  },
+  EUR: {
+    type: "text",
+    value: "€"
+  },
+  INR: {
+    type: "text",
+    value: "₹"
+  },
+  PKR: {
+    type: "text",
+    value: "Rs"
+  }
 };
 
 const defaultState = {
@@ -138,13 +161,30 @@ function setStatusPills(label, state) {
 }
 
 function getCurrencyPrefix(currency) {
-  return CURRENCY_SYMBOLS[currency] || currency || defaultState.currency;
+  return CURRENCY_SYMBOLS[currency] || {
+    type: "text",
+    value: currency || defaultState.currency
+  };
 }
 
 function updateCurrencyPrefixes(currency) {
   const prefix = getCurrencyPrefix(currency);
+
   currencyPrefixes.forEach((element) => {
-    element.textContent = prefix;
+    element.replaceChildren();
+    element.dataset.kind = prefix.type;
+
+    if (prefix.type === "image") {
+      const image = document.createElement("img");
+      image.className = "currency-prefix-mark";
+      image.src = prefix.src;
+      image.alt = prefix.alt;
+      image.decoding = "async";
+      element.appendChild(image);
+      return;
+    }
+
+    element.textContent = prefix.value;
   });
 }
 

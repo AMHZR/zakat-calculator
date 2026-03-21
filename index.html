@@ -32,7 +32,7 @@
       string on CSS/JS references below is bumped manually on each deploy to bust
       the browser cache when file contents change.
     -->
-    <link rel="stylesheet" href="./styles.css?v=20260321-aedsymbol">
+    <link rel="stylesheet" href="./styles.css?v=20260321-currency-symbols">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -222,7 +222,9 @@
                     </details>
                   </div>
                   <div class="price-input-shell">
-                    <span class="currency-prefix" data-currency-prefix> د.إ </span>
+                    <span class="currency-prefix" data-currency-prefix data-kind="image">
+                      <img class="currency-prefix-mark" src="./assets/currency/aed-dirham-symbol.png" alt="UAE dirham symbol" decoding="async">
+                    </span>
                     <input id="goldPricePerGram" type="number" name="goldPricePerGram" min="0" step="0.01" inputmode="decimal" placeholder="Enter today's market price">
                   </div>
                 </div>
@@ -236,7 +238,9 @@
                     </details>
                   </div>
                   <div class="price-input-shell">
-                    <span class="currency-prefix" data-currency-prefix> د.إ </span>
+                    <span class="currency-prefix" data-currency-prefix data-kind="image">
+                      <img class="currency-prefix-mark" src="./assets/currency/aed-dirham-symbol.png" alt="UAE dirham symbol" decoding="async">
+                    </span>
                     <input id="silverPricePerGram" type="number" name="silverPricePerGram" min="0" step="0.01" inputmode="decimal" placeholder="Enter today's market price">
                   </div>
                 </div>
@@ -620,6 +624,6 @@
     </section>
 
     <!-- Cache-busting: bump ?v= on deploy; see comment near <link rel="stylesheet"> for full strategy -->
-    <script type="module" src="./app.js?v=20260321-aedsymbol"></script>
+    <script type="module" src="./app.js?v=20260321-currency-symbols"></script>
   </body>
 </html>

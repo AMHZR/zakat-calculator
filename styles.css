@@ -459,10 +459,25 @@ input:not([type="checkbox"]):not([type="radio"]):focus::placeholder {
 
 .currency-prefix {
   flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 46px;
   padding: 0 0 0 14px;
   color: var(--muted);
   font-weight: 800;
   letter-spacing: 0.01em;
+}
+
+.currency-prefix-mark {
+  display: block;
+  width: auto;
+  height: 21px;
+  object-fit: contain;
+}
+
+.currency-prefix[data-kind="image"] {
+  padding-right: 2px;
 }
 
 .price-input-shell input:not([type="checkbox"]):not([type="radio"]) {
