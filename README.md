@@ -50,6 +50,7 @@ Sample PDF: [zakat-calculation-sample.pdf](docs/sample-report/zakat-calculation-
 
 - Guided flow: users move through one step at a time instead of facing one huge form.
 - Mobile-first UI: the layout is designed to stay usable on smaller screens.
+- Multi-currency support: currently supports AED, USD, SAR, GBP, EUR, INR, and PKR.
 - Live metal pricing: users can fetch current gold and silver prices instead of entering them manually.
 - Clear result: zakat due, net zakatable wealth, and nisab threshold are shown in a focused summary.
 - Print-ready output: the final result can be printed or saved as a one-page PDF with the detailed breakdown and source notes.

@@ -49,6 +49,22 @@ test("returns 200 with valid JSON for a valid currency", async () => {
   assert.equal(body.silverPricePerGram, SAMPLE_PAYLOAD.silverPricePerGram);
 });
 
+test("accepts INR as a supported currency", async () => {
+  let receivedCurrency;
+  mockFetchPrices.mock.mockImplementation(async (cur) => {
+    receivedCurrency = cur;
+    return { ...SAMPLE_PAYLOAD, currency: cur };
+  });
+
+  const res = await GET(makeRequest("INR"));
+
+  assert.equal(res.status, 200);
+  assert.equal(receivedCurrency, "INR");
+
+  const body = await res.json();
+  assert.equal(body.currency, "INR");
+});
+
 test("defaults to USD when no currency param is provided", async () => {
   let receivedCurrency;
   mockFetchPrices.mock.mockImplementation(async (cur) => {

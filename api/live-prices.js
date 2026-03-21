@@ -1,6 +1,6 @@
 import { fetchLatestMetalPricesFromProviders } from "../live-pricing.js";
 
-const ALLOWED_CURRENCIES = new Set(["AED", "USD", "SAR", "GBP", "EUR", "PKR"]);
+const ALLOWED_CURRENCIES = new Set(["AED", "USD", "SAR", "GBP", "EUR", "INR", "PKR"]);
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url, "https://zakat-calculator-universal.vercel.app");
@@ -8,7 +8,7 @@ export async function GET(request) {
 
   if (!ALLOWED_CURRENCIES.has(currency)) {
     return new Response(
-      JSON.stringify({ error: "Invalid currency. Supported: AED, USD, SAR, GBP, EUR, PKR." }),
+      JSON.stringify({ error: "Invalid currency. Supported: AED, USD, SAR, GBP, EUR, INR, PKR." }),
       { status: 400, headers: { "Content-Type": "application/json" } }
     );
   }
