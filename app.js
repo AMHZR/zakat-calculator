@@ -38,7 +38,7 @@ const CURRENCY_SYMBOLS = {
 const defaultState = {
   currency: "AED",
   nisabBasis: "gold",
-  hawlCompleted: false,
+  hawlCompleted: true,
   includePersonalJewelry: false,
   cash: "",
   bankBalances: "",
