@@ -190,7 +190,7 @@ a {
   gap: 10px;
 }
 
-.landing-feature,
+.landing-explain-drawer,
 .source-drawer,
 .result-metric,
 .mini-card {
@@ -199,19 +199,14 @@ a {
   background: rgba(255, 255, 255, 0.74);
 }
 
-.landing-feature {
+.landing-explain-drawer[open] {
   display: grid;
   gap: 8px;
   padding: 15px;
 }
 
-.landing-feature strong {
-  font-size: 1rem;
-}
-
-.landing-feature span {
-  color: var(--muted);
-  line-height: 1.5;
+.landing-explain-drawer:not([open]) {
+  padding: 12px 14px;
 }
 
 .landing-flow {
@@ -236,7 +231,18 @@ a {
   font-weight: 800;
 }
 
-.landing-source-drawer {
+.landing-explain-drawer summary,
+.landing-source-drawer summary {
+  list-style: none;
+}
+
+.landing-explain-drawer summary::-webkit-details-marker,
+.landing-source-drawer summary::-webkit-details-marker {
+  display: none;
+}
+
+.landing-source-drawer,
+.landing-explain-drawer {
   margin-top: 2px;
 }
 
@@ -1063,12 +1069,11 @@ input:not([type="checkbox"]):not([type="radio"]):focus::placeholder {
 
   .landing-copy h1 {
     max-width: 10ch;
-    font-size: clamp(1.6rem, 6.4vw, 2.1rem);
+    font-size: clamp(1.45rem, 6vw, 1.95rem);
   }
 
   .landing-text,
   .landing-note,
-  .landing-feature span,
   .landing-flow,
   .step-copy {
     line-height: 1.45;
@@ -1103,13 +1108,22 @@ input:not([type="checkbox"]):not([type="radio"]):focus::placeholder {
   }
 
   .landing-pill {
-    padding: 7px 10px;
-    font-size: 0.82rem;
+    padding: 6px 9px;
+    font-size: 0.78rem;
   }
 
-  .landing-feature,
+  .landing-explain-drawer,
   .source-drawer {
     padding: 13px;
+  }
+
+  .landing-side {
+    gap: 8px;
+  }
+
+  .landing-explain-drawer:not([open]),
+  .landing-source-drawer:not([open]) {
+    padding: 11px 13px;
   }
 
   .journey-topbar {
