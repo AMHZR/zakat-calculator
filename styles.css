@@ -88,6 +88,7 @@ a {
   height: 100%;
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+  grid-template-rows: minmax(0, 1fr) auto;
   gap: 18px;
   padding: 18px;
   overflow: hidden;
@@ -109,6 +110,18 @@ a {
   padding: 6px 6px 6px 2px;
 }
 
+.landing-copy .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(13, 138, 116, 0.1);
+  border: 1px solid rgba(13, 138, 116, 0.12);
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+}
+
 .landing-copy h1,
 .step-head h3,
 .breakdown-card h4 {
@@ -119,7 +132,8 @@ a {
 
 .landing-copy h1 {
   font-size: clamp(1.9rem, 4.3vw, 3.1rem);
-  max-width: 11ch;
+  max-width: 14ch;
+  text-wrap: balance;
 }
 
 .step-head h3 {
@@ -190,6 +204,14 @@ a {
   gap: 10px;
 }
 
+.landing-footer-actions {
+  grid-column: 1 / -1;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: 10px;
+  border-top: 1px solid rgba(19, 36, 49, 0.08);
+}
+
 .landing-explain-drawer,
 .source-drawer,
 .result-metric,
@@ -227,6 +249,10 @@ a {
 }
 
 .source-drawer summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   cursor: pointer;
   font-weight: 800;
 }
@@ -244,6 +270,24 @@ a {
 .landing-source-drawer,
 .landing-explain-drawer {
   margin-top: 2px;
+}
+
+.landing-explain-drawer summary::after,
+.landing-source-drawer summary::after {
+  content: "›";
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+  transform: rotate(90deg);
+  transition: transform 140ms ease, color 140ms ease;
+}
+
+.landing-explain-drawer[open] summary::after,
+.landing-source-drawer[open] summary::after {
+  transform: rotate(270deg);
+  color: var(--ink);
 }
 
 .source-list {
@@ -1064,7 +1108,7 @@ input:not([type="checkbox"]):not([type="radio"]):focus::placeholder {
 
   .landing-card {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto minmax(0, 1fr) auto;
     align-content: start;
     gap: 12px;
     padding: 14px;
@@ -1095,8 +1139,14 @@ input:not([type="checkbox"]):not([type="radio"]):focus::placeholder {
   }
 
   .landing-copy h1 {
-    max-width: 10ch;
-    font-size: clamp(1.45rem, 6vw, 1.95rem);
+    max-width: 100%;
+    font-size: clamp(1.7rem, 7.8vw, 2.35rem);
+  }
+
+  .landing-copy .eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    padding: 7px 10px;
   }
 
   .landing-text,
@@ -1132,6 +1182,12 @@ input:not([type="checkbox"]):not([type="radio"]):focus::placeholder {
 
   .landing-pill-row {
     gap: 8px;
+  }
+
+  .landing-footer-actions {
+    padding-top: 8px;
+    border-top: 0;
+    margin-top: auto;
   }
 
   .landing-pill {
