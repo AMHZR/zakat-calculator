@@ -66,6 +66,7 @@ const steps = [
 ];
 
 const form = document.querySelector("[data-calculator-form]");
+const root = document.documentElement;
 const landingView = document.querySelector("[data-landing-view]");
 const journeyView = document.querySelector("[data-journey-view]");
 const enterJourneyButton = document.querySelector("[data-enter-journey]");
@@ -86,6 +87,8 @@ const stepTitle = document.querySelector("[data-step-title]");
 const stepStatus = document.querySelector("[data-step-status]");
 const progressFill = document.querySelector("[data-progress-fill]");
 const printButton = document.querySelector("[data-print-report]");
+const NAVIGABLE_FIELD_SELECTOR = "input:not([type='checkbox']):not([type='radio']), select";
+const TEXT_INPUT_SELECTOR = "input:not([type='checkbox']):not([type='radio'])";
 
 function setupFieldPlaceholders() {
   const fields = Array.from(document.querySelectorAll(".field"));
@@ -112,6 +115,105 @@ function setupFieldPlaceholders() {
 }
 
 setupFieldPlaceholders();
+
+function getPanelFields(panel) {
+  return Array.from(panel.querySelectorAll(NAVIGABLE_FIELD_SELECTOR)).filter((field) => !field.disabled);
+}
+
+function getPanelTextInputs(panel) {
+  return Array.from(panel.querySelectorAll(TEXT_INPUT_SELECTOR)).filter((field) => !field.disabled);
+}
+
+function updateKeyboardViewport() {
+  if (!window.visualViewport) {
+    root.style.setProperty("--app-height", "100dvh");
+    root.style.setProperty("--keyboard-offset", "0px");
+    return;
+  }
+
+  const viewport = window.visualViewport;
+  const keyboardOffset = Math.max(0, window.innerHeight - (viewport.height + viewport.offsetTop));
+
+  root.style.setProperty("--app-height", `${viewport.height}px`);
+  root.style.setProperty("--keyboard-offset", `${keyboardOffset}px`);
+}
+
+function scrollFieldIntoView(field, { behavior = "smooth" } = {}) {
+  if (!(field instanceof HTMLElement)) {
+    return;
+  }
+
+  const panel = field.closest("[data-step-panel]");
+
+  if (!(panel instanceof HTMLElement)) {
+    return;
+  }
+
+  const panelRect = panel.getBoundingClientRect();
+  const fieldRect = field.getBoundingClientRect();
+  const keyboardOffset = Number.parseFloat(getComputedStyle(root).getPropertyValue("--keyboard-offset")) || 0;
+  const topPadding = 18;
+  const bottomPadding = keyboardOffset > 0 ? keyboardOffset + 28 : 28;
+  const visibleTop = panelRect.top + topPadding;
+  const visibleBottom = panelRect.bottom - bottomPadding;
+
+  if (fieldRect.top >= visibleTop && fieldRect.bottom <= visibleBottom) {
+    return;
+  }
+
+  const delta = fieldRect.top < visibleTop
+    ? fieldRect.top - visibleTop
+    : fieldRect.bottom - visibleBottom;
+
+  panel.scrollBy({
+    top: delta,
+    behavior
+  });
+}
+
+function updateInputNavigation() {
+  stepPanels.forEach((panel) => {
+    const textInputs = getPanelTextInputs(panel);
+
+    textInputs.forEach((input, index) => {
+      input.setAttribute("enterkeyhint", index === textInputs.length - 1 ? "done" : "next");
+      input.dataset.inputNavIndex = String(index);
+    });
+  });
+}
+
+function focusAdjacentField(currentField) {
+  if (!(currentField instanceof HTMLElement)) {
+    return false;
+  }
+
+  const panel = currentField.closest("[data-step-panel]");
+
+  if (!(panel instanceof HTMLElement)) {
+    return false;
+  }
+
+  const textInputs = getPanelTextInputs(panel);
+  const currentIndex = textInputs.indexOf(currentField);
+
+  if (currentIndex === -1) {
+    return false;
+  }
+
+  const nextField = textInputs[currentIndex + 1];
+
+  if (!nextField) {
+    currentField.blur();
+    return false;
+  }
+
+  nextField.focus({ preventScroll: true });
+  scrollFieldIntoView(nextField);
+  return true;
+}
+
+updateInputNavigation();
+updateKeyboardViewport();
 
 const summaryFields = {
   status: Array.from(document.querySelectorAll("[data-summary-status]")),
@@ -489,7 +591,7 @@ function render(state) {
 }
 
 function findFocusable(panel) {
-  return panel.querySelector("input, select, button");
+  return getPanelFields(panel)[0] || panel.querySelector("button");
 }
 
 function renderStep() {
@@ -538,6 +640,7 @@ function setCurrentStep(nextStep, { focus = true } = {}) {
 
   if (focusable) {
     focusable.focus({ preventScroll: true });
+    scrollFieldIntoView(focusable, { behavior: "auto" });
   }
 }
 
@@ -611,6 +714,42 @@ setPriceStatus("Use live prices or enter them manually.", "neutral");
 
 form.addEventListener("input", handleChange);
 form.addEventListener("change", handleChange);
+form.addEventListener("focusin", (event) => {
+  const field = event.target;
+
+  if (!(field instanceof HTMLElement) || !field.matches(NAVIGABLE_FIELD_SELECTOR)) {
+    return;
+  }
+
+  requestAnimationFrame(() => {
+    scrollFieldIntoView(field, { behavior: "smooth" });
+  });
+
+  window.setTimeout(() => {
+    if (document.activeElement === field) {
+      scrollFieldIntoView(field, { behavior: "smooth" });
+    }
+  }, 180);
+});
+
+form.addEventListener("keydown", (event) => {
+  const field = event.target;
+
+  if (
+    event.key !== "Enter"
+    || event.shiftKey
+    || event.altKey
+    || event.ctrlKey
+    || event.metaKey
+    || !(field instanceof HTMLElement)
+    || !field.matches(TEXT_INPUT_SELECTOR)
+  ) {
+    return;
+  }
+
+  event.preventDefault();
+  focusAdjacentField(field);
+});
 
 enterJourneyButton.addEventListener("click", () => {
   startJourney();
@@ -666,6 +805,20 @@ document.addEventListener("keydown", (event) => {
     closeLearnModal();
   }
 });
+
+window.addEventListener("resize", updateKeyboardViewport);
+
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", () => {
+    updateKeyboardViewport();
+
+    const activeField = document.activeElement;
+
+    if (activeField instanceof HTMLElement && activeField.matches(NAVIGABLE_FIELD_SELECTOR)) {
+      scrollFieldIntoView(activeField, { behavior: "smooth" });
+    }
+  });
+}
 
 if (!initialState.goldPricePerGram && !initialState.silverPricePerGram) {
   refreshLivePrices();

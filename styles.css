@@ -1,4 +1,6 @@
 :root {
+  --app-height: 100dvh;
+  --keyboard-offset: 0px;
   --bg: #edf7fb;
   --bg-strong: #e4f4f0;
   --surface: rgba(255, 255, 255, 0.94);
@@ -69,7 +71,7 @@ a {
 
 .landing-shell,
 .app-shell {
-  height: 100dvh;
+  height: var(--app-height);
   width: min(1120px, calc(100% - 20px));
   margin: 0 auto;
   padding: 10px 0;
@@ -559,6 +561,8 @@ a {
   height: 100%;
   overflow: auto;
   padding-right: 2px;
+  scroll-padding: 18px 0 calc(var(--keyboard-offset) + 28px);
+  overscroll-behavior: contain;
 }
 
 .step-panel.is-active {
@@ -631,6 +635,7 @@ select {
   background: var(--surface-soft);
   color: var(--ink);
   padding: 13px 14px;
+  scroll-margin: 18px 0 calc(var(--keyboard-offset) + 24px);
   transition: border-color 140ms ease, box-shadow 140ms ease;
 }
 
