@@ -32,7 +32,7 @@
       string on CSS/JS references below is bumped manually on each deploy to bust
       the browser cache when file contents change.
     -->
-    <link rel="stylesheet" href="./styles.css?v=20260322-ios-chrome-keyboard">
+    <link rel="stylesheet" href="./styles.css?v=20260322-result-focus">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -430,6 +430,29 @@
                 <p class="step-copy">Enter near-term deductions, then review the result and expand the details only if you need them.</p>
               </div>
 
+              <div class="result-card" data-step-focus tabindex="-1">
+                <div class="status-row">
+                  <span class="status-pill" data-summary-status data-state="incomplete">We still need your metal prices</span>
+                  <p class="status-copy" data-summary-message></p>
+                </div>
+
+                <div class="result-hero">
+                  <span>Estimated zakat due today</span>
+                  <strong data-summary-zakat></strong>
+                </div>
+
+                <div class="result-grid">
+                  <div class="result-metric">
+                    <span>Net zakatable wealth</span>
+                    <strong data-summary-net-assets></strong>
+                  </div>
+                  <div class="result-metric">
+                    <span>Selected nisab threshold</span>
+                    <strong data-summary-nisab></strong>
+                  </div>
+                </div>
+              </div>
+
               <div class="field-grid">
                 <div class="field">
                   <div class="field-header">
@@ -451,29 +474,6 @@
                     </details>
                   </div>
                   <input id="businessLiabilities" type="number" name="businessLiabilities" min="0" step="0.01" inputmode="decimal" placeholder="0.00">
-                </div>
-              </div>
-
-              <div class="result-card">
-                <div class="status-row">
-                  <span class="status-pill" data-summary-status data-state="incomplete">We still need your metal prices</span>
-                  <p class="status-copy" data-summary-message></p>
-                </div>
-
-                <div class="result-hero">
-                  <span>Estimated zakat due today</span>
-                  <strong data-summary-zakat></strong>
-                </div>
-
-                <div class="result-grid">
-                  <div class="result-metric">
-                    <span>Net zakatable wealth</span>
-                    <strong data-summary-net-assets></strong>
-                  </div>
-                  <div class="result-metric">
-                    <span>Selected nisab threshold</span>
-                    <strong data-summary-nisab></strong>
-                  </div>
                 </div>
               </div>
 
@@ -725,6 +725,6 @@
     </section>
 
     <!-- Cache-busting: bump ?v= on deploy; see comment near <link rel="stylesheet"> for full strategy -->
-    <script type="module" src="./app.js?v=20260322-ios-chrome-keyboard"></script>
+    <script type="module" src="./app.js?v=20260322-result-focus"></script>
   </body>
 </html>

@@ -598,7 +598,7 @@ function render(state) {
 }
 
 function findFocusable(panel) {
-  return getPanelFields(panel)[0] || panel.querySelector("button");
+  return panel.querySelector("[data-step-focus]") || getPanelFields(panel)[0] || panel.querySelector("button");
 }
 
 function renderStep() {

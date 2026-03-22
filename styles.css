@@ -902,6 +902,11 @@ input:not([type="checkbox"]):not([type="radio"]):focus::placeholder {
   border: 1px solid rgba(36, 119, 214, 0.12);
 }
 
+.result-card:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(36, 119, 214, 0.12);
+}
+
 .status-row {
   display: grid;
   gap: 8px;
