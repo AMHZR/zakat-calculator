@@ -89,6 +89,7 @@ const progressFill = document.querySelector("[data-progress-fill]");
 const printButton = document.querySelector("[data-print-report]");
 const NAVIGABLE_FIELD_SELECTOR = "input:not([type='checkbox']):not([type='radio']), select";
 const TEXT_INPUT_SELECTOR = "input:not([type='checkbox']):not([type='radio'])";
+let lastStableAppHeight = window.innerHeight || 0;
 
 function setupFieldPlaceholders() {
   const fields = Array.from(document.querySelectorAll(".field"));
@@ -132,10 +133,16 @@ function updateKeyboardViewport() {
   }
 
   const viewport = window.visualViewport;
-  const keyboardOffset = Math.max(0, window.innerHeight - (viewport.height + viewport.offsetTop));
+  const viewportHeight = Math.round(viewport.height + viewport.offsetTop);
+  const keyboardOffset = Math.max(0, window.innerHeight - viewportHeight);
+  const keyboardThreshold = 120;
 
-  root.style.setProperty("--app-height", `${viewport.height}px`);
-  root.style.setProperty("--keyboard-offset", `${keyboardOffset}px`);
+  if (keyboardOffset < keyboardThreshold) {
+    lastStableAppHeight = viewportHeight;
+  }
+
+  root.style.setProperty("--app-height", `${lastStableAppHeight || viewportHeight}px`);
+  root.style.setProperty("--keyboard-offset", `${keyboardOffset >= keyboardThreshold ? keyboardOffset : 0}px`);
 }
 
 function scrollFieldIntoView(field, { behavior = "smooth" } = {}) {
