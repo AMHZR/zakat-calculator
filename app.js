@@ -68,6 +68,7 @@ const steps = [
 const form = document.querySelector("[data-calculator-form]");
 const root = document.documentElement;
 const landingView = document.querySelector("[data-landing-view]");
+const landingSourceDrawer = document.querySelector(".landing-source-drawer");
 const journeyView = document.querySelector("[data-journey-view]");
 const enterJourneyButton = document.querySelector("[data-enter-journey]");
 const learnOpenButtons = Array.from(document.querySelectorAll("[data-open-learn]"));
@@ -712,6 +713,11 @@ async function refreshLivePrices() {
 }
 
 const initialState = loadState();
+
+if (landingSourceDrawer) {
+  landingSourceDrawer.open = window.matchMedia("(min-width: 861px)").matches;
+}
+
 populateForm(initialState);
 updateCurrencyPrefixes(initialState.currency);
 render(initialState);
